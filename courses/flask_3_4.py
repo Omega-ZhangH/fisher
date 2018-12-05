@@ -1,5 +1,5 @@
 from flask import Flask
-from helper import is_isbn_key
+from app.libs.helper import is_isbn_key
 
 app = Flask(__name__)
 # 第二种导入配置文件

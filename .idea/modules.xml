@@ -3,6 +3,8 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/.idea/fisher.iml" filepath="$PROJECT_DIR$/.idea/fisher.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../../flask_ops_platform/.idea/flask_ops_platform.iml" filepath="$PROJECT_DIR$/../../flask_ops_platform/.idea/flask_ops_platform.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../mstx_open_api/.idea/mstx_open_api.iml" filepath="$PROJECT_DIR$/../mstx_open_api/.idea/mstx_open_api.iml" />
     </modules>
   </component>
 </project>

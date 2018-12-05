@@ -1,37 +1,67 @@
+#!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-# @Time    : 2018/11/14 15:37
-# @Author  : 张皓
-# @Email   : zhanghao12z@163.com
-# @File    : book.py.py
-# @Software: PyCharm
-# 路由地址传递参数
-from flask import jsonify, Blueprint
-from helper import is_isbn_key
-from yushu_book import YuShuBook
-
 """
-from fisher import app
- 如果这在里引入fisher的app核心对象，fisher会当做一个模块运行，最后的if判断中主函数名不是__main__
-而是fisher。所以不会运行。如果再在Fisher里引用book.py则会导致循环引用后启动的app找不到book中的路由 
+Date    : Nov 22, 2018 10:55
+Author  : 张皓
+Email   : zhanghao12z@163.com
+Function:
+===========================================
+调用方法
+Template:
+===========================================
 """
+from flask import jsonify, request
+from app.libs.helper import is_isbn_key
+from app.spider.yushu_book import YuShuBook
 
-# 实例化蓝图对象，并导入蓝图 变量为蓝图的名称和模块包
-web = Blueprint('web', __name__)
+# 导入验证层，判断参数是否合法
+from app.forms.book import SearchForm
+from . import web
+
+# 导入ViewModel处理书籍数据
+from app.view_models.book import BookViewModel
+
+@web.route('/test')
+def test():
+    from .nolocal import n
+
+    print('引入自定义的非线程隔离的变量原始值V：%s' % n.v)
+    n.v = 2
+
+    print('request线程隔离的变量原始值：%s' % getattr(request, 'v', None))
+    setattr(request, 'v', 3)
+    print('request线程隔离更新后的变量V：%s' % getattr(request, 'v', None))
+    print('非线程隔离的变量更新后V：%s' % n.v)
+    print('=======================')
+    return ''
 
 
-@web.route('/book/search/<q>/<page>')
-def search(q, page):
+# @web.route('/book/search/<q>/<page>')
+@web.route('/book/search')
+def search():
     """ q:用户传递的参数
         page:用户传递的页面
     """
-    # 判断用户传入的参数是否为isbn
-    isbn_or_key = is_isbn_key(q)
-    if isbn_or_key == 'isbn':
-        # 在pycharm中选择YuShuBook安住option+enter可以自动导入类
-        result = YuShuBook.search_by_isbn(q)
+    # 通过验证层判断参数是否合法
+    form = SearchForm(request.args)
+    if form.validate():
+        # 取出验证后的值,并去除前后的值
+        q = form.q.data.strip()
+        page = form.page.data
+        # 判断用户传入的参数是否为isbn
+        isbn_or_key = is_isbn_key(q)
+        if isbn_or_key == 'isbn':
+            # 在pycharm中选择YuShuBook安住option+enter可以自动导入类
+            result = YuShuBook.search_by_isbn(q)
+            result = BookViewModel.package_single(result, q)
+        else:
+            result = YuShuBook.search_by_keyword(q, page)
+            result = BookViewModel.package_collection(result, q)
+        # 通过json模块处理返回结果
+        # return json.dumps(result), 200, {'content-type': 'application/json'}
+        # 通过flask自带的jsonify处理,效果同上
+        return jsonify(result)
     else:
-        result = YuShuBook.search_by_keyword(q)
-    # 通过json模块处理返回结果
-    # return json.dumps(result), 200, {'content-type': 'application/json'}
-    # 通过flask自带的jsonify处理,效果同上
-    return jsonify(result)
+        # 返回自定义的错误返回
+        # return jsonify({'msg': '参数校验失败'})
+        return jsonify(form.errors)

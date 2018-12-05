@@ -11,8 +11,8 @@ Template:
 ===========================================
 """
 from flask import Flask
-from helper import is_isbn_key
-from yushu_book import YuShuBook
+from app.libs.helper import is_isbn_key
+from app.spider.yushu_book import YuShuBook
 
 app = Flask(__name__)
 # 第二种导入配置文件

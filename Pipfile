@@ -5,6 +5,10 @@ name = "pypi"
 
 [packages]
 flask = "*"
+wtforms = "*"
+cymysql = "*"
+pymysql = "*"
+cx-oracle = "*"
 
 [dev-packages]
 

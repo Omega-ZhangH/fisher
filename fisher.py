@@ -17,4 +17,7 @@ app = create_app()
 
 if __name__ == '__main__':
 #    app.run(host='0.0.0.0', debug=app.config['DEBUG'], port=80)
-    app.run(debug=app.config['DEBUG'])
+    # app.run(debug=app.config['DEBUG'])
+
+# 开启多线程 thread=True
+    app.run(debug=app.config['DEBUG'], threaded=True)

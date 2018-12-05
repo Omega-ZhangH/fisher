@@ -10,3 +10,13 @@ Function: 把web的初始化作为包。在这里web是蓝图。
 Template:
 ===========================================
 """
+
+
+# 初始化蓝图
+from flask import Blueprint
+web = Blueprint('web', __name__)
+
+
+# 导入蓝图下的模块
+
+from app.web import book
