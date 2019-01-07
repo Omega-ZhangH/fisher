@@ -20,3 +20,9 @@ web = Blueprint('web', __name__)
 # 导入蓝图下的模块
 
 from app.web import book
+from app.web import auth
+from app.web import drift
+from app.web import gift
+from app.web import main
+from app.web import wish
+

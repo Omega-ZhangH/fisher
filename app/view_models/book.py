@@ -4,7 +4,7 @@
 Date    : Dec 4, 2018 16:35
 Author  : 张皓
 Email   : zhanghao12z@163.com
-Function: 预处理API的返回数据
+Function: 书籍模型定义
 ===========================================
 调用方法
 Template:
@@ -21,8 +21,18 @@ class BookViewModel:
         self.pages = '' if book['pages'] is None else book['pages']
         self.author = '、'.join(book['author'])
         self.price = book['price']
+        self.isbn = book['isbn']
         self.summary = book['summary'] or ''
         self.image = book['image']
+        self.pubdate = book['pubdate']
+        self.binding = book['binding']
+
+    # 因为这个方法返回的是具体的数据，所以可以用装饰器来让这个方法让类像访问变量一样访问方法 BookViewModel.intro
+    @property
+    def intro(self):
+        intros = filter(lambda x: x if True else False, [self.author, self.publisher, self.price])
+
+        return '/'.join(intros)
 
 
 class BookCollection:

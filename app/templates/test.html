@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+    七月
+--     模板语言判断
+    {{data.age, n.name}}
+    {{data, n}}
+    {% if data.age < 18 %}
+        {{data.age}}
+    {% elif data.name == '张皓' %}
+        do something
+    {% else %}
+        {{data.name}}
+    {% endif %}
+</body>
+</html>

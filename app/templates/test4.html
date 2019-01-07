@@ -1,0 +1,27 @@
+<!--引入基础模板-->
+{% extends 'layout.html' %}
+<!--把数据展示到基础模板的content块-->
+{% block content %}
+<!--继承-->
+    {{ super() }}
+    {% if data.age > 18 %}
+<!--过滤器，如果字典中没有这个key则返回未名-->
+        {{ data.school | default('未名') }}
+<!--消息闪现-->
+            <div>正常的消息闪现:</div>
+            {% set message = get_flashed_messages() %}
+            {{ message }}
+    {% endif %}
+
+<div></div>
+<!--with的消息闪现-->
+{% with error = get_flashed_messages(category_filter=['error']) %}
+    {% if data.age > 18 %}
+<!--过滤器，如果字典中没有这个key则返回未名-->
+    {{ 'data.name的长度:' }}
+    {{ data.name | length() }}
+<div>错误消息闪现:</div>
+    {{ error }}
+    {% endif %}
+{% endwith %}
+{% endblock %}

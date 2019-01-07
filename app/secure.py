@@ -24,3 +24,4 @@ SQLALCHEMY_DATABASE_URI = 'mysql+cymysql://mstx:mstx@localhost:63306/fisher'
 SQLALCHEMY_TRACK_MODIFICATIONS = True
 # DEBUG = False
 
+SECRET_KEY='e10adc3949ba59abbe56e057f20f883e'

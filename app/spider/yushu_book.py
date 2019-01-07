@@ -31,7 +31,7 @@ class YuShuBook:
 
     def __fill_single(self, data):
         if data:
-            self.book.append(data['books'])
+            self.book.append(data)
             self.total = 1
 
     def __fill_collection(self, data):
@@ -53,6 +53,11 @@ class YuShuBook:
 
     def calculate_start(self, page):
         return (page - 1) * current_app.config['PER_PAGE']
+
+    @property
+    def first(self):
+        return self.book[0] if self.total >= 1 else None
+
 
 '''
 class YuShuBook:

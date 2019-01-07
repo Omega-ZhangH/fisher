@@ -12,16 +12,40 @@ Template:
 """
 import json
 
-from flask import jsonify, request
+from flask import jsonify, request, render_template, flash
+from flask_login import current_user
+
 from app.libs.helper import is_isbn_key
+from app.modules.gift import Gift
+from app.modules.wish import Wish
 from app.spider.yushu_book import YuShuBook
 
 # 导入验证层，判断参数是否合法
 from app.forms.book import SearchForm
+from app.view_models.trade import TradeInfo
 from . import web
 
 # 导入ViewModel处理书籍数据
 from app.view_models.book import BookViewModel, BookCollection
+
+
+# 2018-12-10 17:50:46
+# 新增访问模板的视图函数
+@web.route('/temp')
+def test1():
+    r = {
+        'name': '张皓',
+        'age': 27
+    }
+    class m:
+        def __init__(self):
+            self.name = '张皓'
+    n = m()
+    flash('正常消息闪现')
+    flash('错误消息闪现', category='error')
+
+# 模板 html
+    return render_template('test4.html', data=r, n=n)
 
 
 @web.route('/test')
@@ -96,9 +120,46 @@ def search():
             yushu_book.search_by_keyword(q, page)
 
         books.fill(yushu_book, q)
-        return json.dumps(books, default=lambda o: o.__dict__, ensure_ascii=False)
+        # return json.dumps(books, default=lambda o: o.__dict__, ensure_ascii=False)
         # return jsonify(books)
     else:
         # 返回自定义的错误返回
         # return jsonify({'msg': '参数校验失败'})
-        return jsonify(form.errors)
+        # return jsonify(form.errors)
+        flash('搜索关键字不符合要求，请重新输入关键字')
+    return render_template('search_result.html', books=books)
+
+
+@web.route('/book/<isbn>/detail')
+def book_detail(isbn):
+    # 判断是否在赠送和心愿清单
+    has_in_gifts = False
+    has_in_wishes = False
+
+    # 取数据的详情页面
+    yushu_book = YuShuBook()
+    yushu_book.search_by_isbn(isbn)
+    book = BookViewModel(yushu_book.first)
+
+    # 判断用户是否登录，是否在用的心愿和礼物清单
+    if current_user.is_authenticated:
+        if Gift.query.filter_by(uid=current_user.id, isbn=isbn, launched=False).first():
+            has_in_gifts = True
+        if Wish.query.filter_by(uid=current_user.id, isbn=isbn, launched=False).first():
+            has_in_wishes = True
+
+    # 查询数据库的模型数据
+    trade_gifts = Gift.query.filter_by(isbn=isbn, launched=False).all()
+    trade_wishes = Wish.query.filter_by(isbn=isbn, launched=False).all()
+
+    # 规整模型数据
+    trade_wishes_model = TradeInfo(trade_wishes)
+    trade_gifts_model = TradeInfo(trade_gifts)
+
+    return render_template('book_detail.html',
+                           book=book,
+                           wishes=trade_wishes_model,
+                           gifts=trade_gifts_model,
+                           has_in_wishes=has_in_wishes,
+                           has_in_gifts=has_in_gifts)
+

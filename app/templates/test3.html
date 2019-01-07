@@ -1,0 +1,24 @@
+<!--引入基础模板-->
+{% extends 'layout.html' %}
+<!--把数据展示到基础模板的content块-->
+{% block content %}
+<!--替换指定区域的值-->
+    {{data.age, n.name}}
+    {{data, n}}
+    {% if data.age < 18 %}
+        {{data.age}}
+    {% elif data.name == '张皓' %}
+        do something
+    {% else %}
+        {{data.name}}
+    {% endif %}
+{% endblock %}
+
+{% block foot %}
+<!--继承本有的值，并加入for循环的新值-->
+    {{ super() }}
+    {% for  foo in [1,2,3] %}
+      {{ foo }}
+      <div>111</div>
+    {% endfor %}
+{% endblock %}

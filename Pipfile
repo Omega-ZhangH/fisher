@@ -9,6 +9,7 @@ wtforms = "*"
 cymysql = "*"
 pymysql = "*"
 cx-oracle = "*"
+flask-login = "*"
 
 [dev-packages]
 

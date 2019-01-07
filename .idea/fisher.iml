@@ -6,5 +6,9 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="module" module-name="mstx_open_api" />
     <orderEntry type="module" module-name="flask_ops_platform" />
+    <orderEntry type="module" module-name="gxb" />
+  </component>
+  <component name="TemplatesService">
+    <option name="TEMPLATE_CONFIGURATION" value="Jinja2" />
   </component>
 </module>
