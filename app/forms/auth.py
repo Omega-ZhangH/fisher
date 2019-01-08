@@ -16,12 +16,21 @@ from wtforms.validators import Length, DataRequired, Email, ValidationError
 from app.modules.user import User
 
 
-class LoginForm(Form):
+class EmailForm(Form):
     """
-    用户登录校验的类
+    校验输入的邮箱
     """
     email = StringField(validators=[DataRequired(), Length(8, 64),
                         Email(message='电子邮件不符合规范')])
+
+
+class LoginForm(EmailForm):
+    """
+    继承EmailForm
+    拥有Email用户邮箱校验
+    """
+    # email = StringField(validators=[DataRequired(), Length(8, 64),
+    #                     Email(message='电子邮件不符合规范')])
 
     password = PasswordField(validators=[DataRequired(message='密码不可以为空，请输入你的密码'), Length(6, 32)])
 
