@@ -14,7 +14,7 @@ Template:
 from flask import Flask
 from app.modules.book import db
 from flask_login import LoginManager
-from flask_mail import  Mail
+from flask_mail import Mail
 
 # 实例化用户登录管理模块
 login_manager = LoginManager()
@@ -40,7 +40,7 @@ def create_app():
     login_manager.login_message = '请先登录或注册'
 
     # 把邮件发送模块注册到核心对象
-    mail.init__app(app)
+    mail.init_app(app)
 
     db.init_app(app)
     db.create_all(app=app)

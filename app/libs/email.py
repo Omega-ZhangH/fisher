@@ -11,3 +11,11 @@ Template:
 ===========================================
 """
 
+from app import mail
+from flask_mail import Message
+
+
+def send_mail():
+    msg = Message('鱼书邮件', sender='mstx_zhanghao@163.com', body='Test',
+                  recipients=['zhanghao@msok.com'])
+    mail.send(msg)
