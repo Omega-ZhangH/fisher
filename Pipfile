@@ -10,6 +10,7 @@ cymysql = "*"
 pymysql = "*"
 cx-oracle = "*"
 flask-login = "*"
+flask-mail = "*"
 
 [dev-packages]
 
