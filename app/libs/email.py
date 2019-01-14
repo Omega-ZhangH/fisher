@@ -10,11 +10,19 @@ Function: 发送邮件
 Template:
 ===========================================
 """
+from threading import Thread
+
 from flask import current_app, render_template
 
 from app import mail
 from flask_mail import Message
 
+# 异步发送邮件
+def send_async_email(msg):
+    try:
+        mail.send(msg)
+    except:
+        pass
 
 def send_mail(to, subject, template, **kwargs):
     """
@@ -30,4 +38,7 @@ def send_mail(to, subject, template, **kwargs):
                   sender=current_app.config['MAIL_USERNAME'],
                   recipients=[to])
     msg.html = render_template(template, **kwargs)
-    mail.send(msg)
+    # mail.send(msg)
+    # 开启新的线程，异步发送邮件。
+    thread_send = Thread(Target=send_async_email, args=[msg])
+    thread_send.start()
