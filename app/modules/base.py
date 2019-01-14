@@ -40,6 +40,7 @@ class Query(BaseQuery):
 
 
 db = SQLAlchemy(query_class=Query)
+# db = SQLAlchemy(query_class=Query,  use_native_unicode="utf8")
 
 
 # 定义基类

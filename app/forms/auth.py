@@ -11,7 +11,7 @@ Template:
 ===========================================
 """
 from wtforms import Form, StringField, PasswordField
-from wtforms.validators import Length, DataRequired, Email, ValidationError
+from wtforms.validators import Length, DataRequired, Email, ValidationError, EqualTo
 
 from app.modules.user import User
 
@@ -65,3 +65,15 @@ class RegisterForm(LoginForm):
         # 查询用户的邮箱是否已注册
         if User.query.filter_by(email=field.data).first():
             raise ValidationError('用户昵称已注册')
+
+
+class ResetPasswordForm(Form):
+    """
+    检测重置密码的两次密码是否一致
+    """
+    password1 = PasswordField(validators=[
+        DataRequired(),
+        Length(6, 32, message='密码长度度至少需要在6到32个字符之向'),
+        EqualTo('password2', message='两次输入的的密码不相同')])
+    password2 = PasswordField(validators=[
+        DataRequired(), Length(6, 32)])

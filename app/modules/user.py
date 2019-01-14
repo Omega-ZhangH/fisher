@@ -11,6 +11,7 @@ Template:
 ===========================================
 """
 # 获取用户的标识相关信息
+from flask import current_app
 from flask_login import UserMixin
 from app import login_manager
 
@@ -20,9 +21,11 @@ from app.modules.gift import Gift
 from app.modules.wish import Wish
 from app.spider.yushu_book import YuShuBook
 from courses.helper import is_isbn_key
-from .base import Base
+from .base import Base, db
 
 from werkzeug import generate_password_hash, check_password_hash
+
+from itsdangerous import TimedJSONWebSignatureSerializer as Serializer
 
 
 class User(UserMixin, Base):
@@ -93,6 +96,31 @@ class User(UserMixin, Base):
             return True
         else:
             return False
+
+    def generate_token(self, expiration=600):
+        # 生成重置密码邮件中的token，包涵用户的ID
+        s = Serializer(current_app.config['SECRET_KEY'], expiration)
+        temp = s.dumps({'id': self.id}).decode('utf-8')
+        return temp
+
+    @staticmethod
+    def reset_password(token, new_password):
+        s = Serializer(current_app.config['SECRET_KEY'])
+        # 需要考虑token是伪造的或者是过期的
+        try:
+            # 读取token,报错则返回False
+            data = s.loads(token.encode('utf-8'))
+        except:
+            return False
+        uid = data.get('id')
+        with db.auto_commit():
+            user = User.query.get(uid)
+            # 判空
+            if user:
+                user.password = new_password
+            else:
+                return False
+        return True
 
 
 @login_manager.user_loader

@@ -26,7 +26,7 @@ def not_found(e):
     # 这样就可以不用在每一个出现404代码的地方编写了，在这里集中处理，使得代码更加的精简
     # 可以返回自定义的结果
     # return Response(response='^_^!啊哦！404啦',status=200,mimetype='text/html')
-    return '^_^!啊哦！404啦'
+    return '^_^!啊哦！404啦,木有这个页面'
     # return render_template('404.html'), 404
 
 

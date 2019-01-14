@@ -10,12 +10,24 @@ Function: 发送邮件
 Template:
 ===========================================
 """
+from flask import current_app, render_template
 
 from app import mail
 from flask_mail import Message
 
 
-def send_mail():
-    msg = Message('鱼书邮件', sender='mstx_zhanghao@163.com', body='Test',
-                  recipients=['zhanghao@msok.com'])
+def send_mail(to, subject, template, **kwargs):
+    """
+    :param to: 收件人
+    :param subject: 邮件标题
+    :param template: 邮件HTML模板
+    :param kwargs: html渲染参数 用户名和token
+    """
+    # 硬编码的测试邮件
+    # msg = Message('鱼书邮件', sender='mstx_zhanghao@163.com', body='Test',
+    #               recipients=['zhanghao@msok.com'])
+    msg = Message('[鱼书]' + ' ' + subject,
+                  sender=current_app.config['MAIL_USERNAME'],
+                  recipients=[to])
+    msg.html = render_template(template, **kwargs)
     mail.send(msg)
