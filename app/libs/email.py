@@ -17,12 +17,19 @@ from flask import current_app, render_template
 from app import mail
 from flask_mail import Message
 
+
 # 异步发送邮件
-def send_async_email(msg):
-    try:
-        mail.send(msg)
-    except:
-        pass
+def send_async_email(app, msg):
+    """
+    :param app: 传入flask核心对象
+    :param msg: 传入发送邮件的具体内容
+    """
+    with app.app_context():
+        try:
+            mail.send(msg)
+        except Exception as e:
+            print('邮件发送失败!' + e)
+
 
 def send_mail(to, subject, template, **kwargs):
     """
@@ -40,5 +47,7 @@ def send_mail(to, subject, template, **kwargs):
     msg.html = render_template(template, **kwargs)
     # mail.send(msg)
     # 开启新的线程，异步发送邮件。
-    thread_send = Thread(Target=send_async_email, args=[msg])
+    # 注意这里要用核心对象而不是代理对象，否则会导致因线程隔离，找不到对应的核心对象
+    app = current_app._get_current_object()
+    thread_send = Thread(target=send_async_email, args=[app, msg])
     thread_send.start()

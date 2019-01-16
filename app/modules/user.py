@@ -11,12 +11,16 @@ Template:
 ===========================================
 """
 # 获取用户的标识相关信息
+from math import floor
+
 from flask import current_app
 from flask_login import UserMixin
 from app import login_manager
 
 from sqlalchemy import Column, Integer, Boolean, Float, String
 
+from app.libs.enums import PendingStatus
+from app.modules.drift import Drift
 from app.modules.gift import Gift
 from app.modules.wish import Wish
 from app.spider.yushu_book import YuShuBook
@@ -122,6 +126,25 @@ class User(UserMixin, Base):
                 return False
         return True
 
+    # 判断能够索取书籍
+    def can_send_drift(self):
+        if self.beans < 1:
+            return False
+        # 我成功的送出了多少本书
+        success_gift_count = Gift.query.filter_by(uid=self.id, launched=True).count()
+        # 我成功的接收了多少本书
+        success_receive_count = Drift.query.filter_by(requester_id=self.id, pending=PendingStatus.Success.value).count()
+        return True if floor(success_gift_count/2) >= success_receive_count else False
+
+    # 用户的简介
+    @property
+    def summary(self):
+        return dict(
+            nickname=self.nickname,
+            beans=self.beans,
+            email=self.email,
+            send_receive=str(self.send_counter) + '/' + str(self.receive_counter)
+        )
 
 @login_manager.user_loader
 def get_user(uid):

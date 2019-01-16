@@ -30,6 +30,11 @@ class Gift(Base):
     # 手否赠送
     launched = Column(Boolean, default=False)
 
+    # 判读是不是自己送出的礼物
+    def is_yourself_gift(self, uid):
+        return True if uid == self.uid else False
+
+
     # Gitf对象代表的是一个礼物
     # 编写查询最近上传的礼物
     # 类代表的是自然界中具体事物的抽象，不代表某一个
@@ -40,12 +45,12 @@ class Gift(Base):
         # 子函数：group_by、order_by、limit
         # 触发语句：all()、first()
         # 优点：提供了极大的灵活性
-        recent_gitf = Gift.query.filter_by(
+        recent_gift = Gift.query.filter_by(
             launched=False).group_by(
             Gift.isbn).order_by(
             desc(Gift.create_time)).limit(
             current_app.config['RECENT_BOOK_COUNT']).distinct().all()
-        return recent_gitf
+        return recent_gift
 
     # 查询isbn对应的书籍
     @property
@@ -58,8 +63,8 @@ class Gift(Base):
     @classmethod
     def get_user_gifts(cls, uid):
         gifts = Gift.query.filter_by(
-            uid=uid, launched=False).order_by(desc(
-            Gift.create_time)).all()
+            uid=uid, launched=False).order_by(
+            desc(Gift.create_time)).all()
         return gifts
 
     # 获取isbn对应的想要的用户数
