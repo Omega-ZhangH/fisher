@@ -36,6 +36,7 @@ class BookViewModel:
 
 
 class BookCollection:
+    """ 处集合 鱼书book的类 """
     def __init__(self):
         self.total = 0
         self.books = []
