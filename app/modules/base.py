@@ -65,3 +65,8 @@ class Base(db.Model):
             return datetime.fromtimestamp(self.create_time)
         else:
             return None
+
+    # 编写状态设置为回滚
+    @staticmethod
+    def delete(self):
+        self.status = 0

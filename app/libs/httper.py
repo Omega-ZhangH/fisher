@@ -35,6 +35,7 @@ class HTTP:
         #用三元表达式简化以上注释的代码
         # 如果状态码返回不是200且return_json则返回字典空{}否则返回字符串空''
         if r.status_code != 200:
+            # return r.json() if return_json else ''
             return {} if return_json else ''
-        # 如果状态码返回是200且return_json则返回json数据否则返回字符串    
+        # 如果状态码返回是200且return_json则返回json数据否则返回字符串
         return r.json() if return_json else r.text
