@@ -4,6 +4,9 @@
 
 ###[overview]
 
+
+![鱼书-思维导图](./app/static/鱼书-思维导图.png)
+
 ![主要功能框架图-思维导图](./app/static/主要功能框架图-思维导图.png)
 
 ###[Summary]
@@ -48,4 +51,3 @@ I recommend installing in a virtualenv. to get started:
     virtualenv --no-site-packages project
     cd project/
     source bin/activate
-
