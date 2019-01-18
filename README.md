@@ -1,15 +1,14 @@
-###fisher（flask高级编程项目）
+# fisher
 
-鱼书项目：实现一个赠书和接受赠书的项目
+鱼书项目：实现一个赠书和接受赠书的项目（flask高级编程项目）
 
-###[overview]
-
+### [overview]
 
 ![鱼书-思维导图](./app/static/鱼书-思维导图.png)
 
 ![主要功能框架图-思维导图](./app/static/主要功能框架图-思维导图.png)
 
-###[Summary]
+### [Summary]
 
 主要文件夹介绍：
 
@@ -25,12 +24,11 @@
 - courses/menu.py ：记录主要功能点笔记
 - courses：文件夹内,存放大致代码演进过程。
 
-
-###[Python_version]:
+### [Python_version]:
 
 - python_version >= "3.6"
 
-###[packages]
+### [packages]
 
 - cx-Oracle==7.0.0
 - cymysql==0.9.12
@@ -43,11 +41,14 @@
 - urllib3 [required: >=1.21.1,<1.25, installed: 1.24.1]
 - WTForms==2.2.1
 
-###[installing]
+### [installing]
 
 I recommend installing in a virtualenv. to get started:
 
-    # create a new virtualenv
-    virtualenv --no-site-packages project
-    cd project/
-    source bin/activate
+```
+# create a new virtualenv
+virtualenv --no-site-packages project
+cd project/
+source bin/activate
+```
+
