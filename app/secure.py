@@ -15,13 +15,23 @@ Template:
 """
 # 常量通常是大写。配置文件的参数都大写
 DEBUG = True
-# 本地数据库连接
-SQLALCHEMY_DATABASE_URI = 'mysql+cymysql://mstx:mstx@localhost:63306/fisher'
 
-# 民生数据库连接
-#SQLALCHEMY_DATABASE_URI = 'oracle://SYSTEM:"Mstx@2018."@172.16.53.11:1521/ORCL'
+SECRET_KEY = 'e10adc3949ba59abbe56e057f20f883e'
+
+
+# 数据库连接
+USERNAME = ''
+PASSWORD = ''
+HOSTNAME = 'IP'
+PORT = 3306
+DATABASE = 'fisher'
+
+SQLALCHEMY_DATABASE_URI = "mysql+pymysql://{username}:{password}@{host}:{port}/" \
+         "{db}?charset=utf8".format(username=USERNAME,
+                                    password=PASSWORD,
+                                    host=HOSTNAME,
+                                    port=PORT,
+                                    db=DATABASE)
+
 
 SQLALCHEMY_TRACK_MODIFICATIONS = True
-# DEBUG = False
-
-SECRET_KEY='e10adc3949ba59abbe56e057f20f883e'

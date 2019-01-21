@@ -4,8 +4,6 @@
 
 ### [overview]
 
-![鱼书-思维导图](./app/static/鱼书-思维导图.png)
-
 ![主要功能框架图-思维导图](./app/static/主要功能框架图-思维导图.png)
 
 ### [Summary]
@@ -23,25 +21,25 @@
 
 - courses/menu.py ：记录主要功能点笔记
 - courses：文件夹内,存放大致代码演进过程。
+- secure.py：项目数据库配置信息
+- setting.py：个人发送Email通知的配置
 
-### [Python_version]:
+### [Enviroment]:
 
 - python_version >= "3.6"
+- Mysql or MariaDB
 
-### [packages]
+### [Packages]
 
-- cx-Oracle==7.0.0
-- cymysql==0.9.12
 - Flask-Login==0.4.1
 - Flask ==1.0.2
 - Flask-Mail==0.9.1
-- SQLAlchemy [required: >=0.8.0, installed: 1.2.14]
+- flask_sqlalchemy [required: >=0.8.0, installed: 1.2.14]
 - PyMySQL==0.9.3
 - requests==2.20.1
-- urllib3 [required: >=1.21.1,<1.25, installed: 1.24.1]
 - WTForms==2.2.1
 
-### [installing]
+### [Installing]
 
 I recommend installing in a virtualenv. to get started:
 
@@ -52,3 +50,9 @@ cd project/
 source bin/activate
 ```
 
+### [项目在线地址]
+- www.sshxtd.com
+- http://139.199.131.129:5000/
+
+### [项目首页]
+![fisher_index](./app/static/fisher_index.jpg)

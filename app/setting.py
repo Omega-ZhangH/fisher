@@ -19,12 +19,12 @@ BEANS_UPLOAD_ONE_BOOK = 0.5
 # 最近上传显示30本书
 RECENT_BOOK_COUNT = 30
 
-# Email配置
+# Email配置 [QQ邮箱或者163]
 MAIL_SERVER = 'smtp.163.com'
 MAIL_PORT = 465
 MAIL_USE_SSL = True
 MAIL_USE_TSL = False
-MAIL_USERNAME = 'mstx_zhanghao@163.com'
-MAIL_PASSWORD = 'mstx220' # 该密码非邮箱密码，而是授权码
+MAIL_USERNAME = ''
+MAIL_PASSWORD = '' # 该密码非邮箱密码，而是授权码
 # MAIL_SUBJECT_PREFIX = '[鱼书]'
 # MAIL_SENDER = '鱼书 <mstx_zhanghao@163.com>'

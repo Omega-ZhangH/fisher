@@ -20,9 +20,9 @@ from flask import current_app
 class YuShuBook:
     """  """
     # 鱼书API基地址
-    # base_url = 'http://t.yushu.im/v2/book/'
+    base_url = 'http://t.yushu.im/v2/book/'
     # 豆瓣的基地址
-    base_url = 'https://api.douban.com/v2/book/'
+    # base_url = 'https://api.douban.com/v2/book/'
     # 定义通过isbn查找的url
     # isbn_url = 'http://t.yushu.im/v2/book/isbn/{}'
     isbn_url = base_url + 'isbn/{}'
@@ -50,8 +50,8 @@ class YuShuBook:
         result = HTTP.get(url)
 
         # -----适应豆瓣API的代码
-        result['isbn'] = result.pop('isbn10')
-        result['image'] = result['images']['small']
+        # result['isbn'] = result.pop('isbn10')
+        # result['image'] = result['images']['small']
         # -----适应豆瓣API的代码
 
         self.__fill_single(result)
@@ -65,9 +65,9 @@ class YuShuBook:
         result = HTTP.get(url)
 
         # -----适应豆瓣API的代码
-        for i in range(result['count']):
-            result['books'][i]['isbn'] = result['books'][i]['isbn10']
-            result['books'][i]['image'] = result['books'][i]['images']['small']
+        # for i in range(result['count']):
+        #     result['books'][i]['isbn'] = result['books'][i]['isbn10']
+        #     result['books'][i]['image'] = result['books'][i]['images']['small']
         # -----适应豆瓣API的代码
 
         self.__fill_collection(result)
