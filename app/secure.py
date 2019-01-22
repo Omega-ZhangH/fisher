@@ -22,7 +22,7 @@ SECRET_KEY = 'e10adc3949ba59abbe56e057f20f883e'
 # 数据库连接
 USERNAME = ''
 PASSWORD = ''
-HOSTNAME = 'IP'
+HOSTNAME = 'localhost'
 PORT = 3306
 DATABASE = 'fisher'
 

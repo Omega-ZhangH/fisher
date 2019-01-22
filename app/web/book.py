@@ -140,7 +140,6 @@ def book_detail(isbn):
     yushu_book = YuShuBook()
     yushu_book.search_by_isbn(isbn)
     book = BookViewModel(yushu_book.first)
-    print(book.image)
 
     # 判断用户是否登录，是否在用的心愿和礼物清单
     if current_user.is_authenticated:

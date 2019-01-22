@@ -18,12 +18,12 @@ class TradeInfo:
     """
     def __init__(self, goods):
         self.total = 0
-        self.trade = []
+        self.trades = []
         self._parse(goods)
 
     def _parse(self, goods):
         self.total = len(goods)
-        self.trade = [self._map_to_trade(single) for single in goods]
+        self.trades = [self._map_to_trade(single) for single in goods]
 
     def _map_to_trade(self, single):
         if single.create_datetime:
